@@ -1,30 +1,38 @@
-import tkinter as tk
+from tkinter import *
+import string
 import random
 
+characters = list(string.ascii_letters + string.digits + "!@#$%^&*()")
 
+def generate_random_password():
+    length = int(e2.get())
 
+    random.shuffle(characters)
 
-root = tk.Tk()
+    password = []
+    for i in range(length):
+        password.append(random.choice(characters))
 
-canvas1 = tk.Canvas(root, width=400, height=300)
-canvas1.pack()
+    random.shuffle(password)
+    myText.set(password)
 
-entry1 = tk.Entry(root)
-canvas1.create_window(200, 140, window=entry1)
+    generate_random_password()
 
-def gen():
+master = Tk()
+master.wm_title("Password Generator")
+myText = StringVar()
+Label(master, text="").grid(row=0, sticky=W)
+Label(master, text="").grid(row=1, sticky=W)
+Label(master, text="Result:").grid(row=3, sticky=W)
+result = Label(master, text="", textvariable=myText).grid(row=3, column=1, sticky=W)
 
-    x1 = entry1.get()
-    int1 = int(x1)
-    for c in range(int1):
-        
-        chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789=+!@#$%^&*<>/~-:;?'
-        x2 = random.choice(chars)
-        label1 = tk.Label(root, (x2))
-        canvas1.create_window(200, 230, window=label1)
+e1 = Label(master, text="Enter Number of Characters:")
+e2 = Entry(master)
 
+e1.grid(row=0, column=1)
+e2.grid(row=1, column=1)
 
-button1 = tk.Button(text='Get the Square Root', command=gen)
-canvas1.create_window(200, 180, window=button1)
+b = Button(master, text="Get Password", command=generate_random_password)
+b.grid(row=0, column=2, columnspan=2, rowspan=2, sticky=W + E + N + S, padx=5, pady=5)
 
-root.mainloop()
+mainloop()
